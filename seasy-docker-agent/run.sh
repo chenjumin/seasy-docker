@@ -1,0 +1,1 @@
+java -Xms128m -Xmx512m -classpath seasy-docker-agent.jar com.seasy.docker.agent.Main &

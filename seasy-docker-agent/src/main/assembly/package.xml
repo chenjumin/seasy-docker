@@ -1,0 +1,46 @@
+<assembly>  
+	<!-- mvn clean assembly:assembly -->
+    <id>release</id> 
+     
+    <!-- format: tar.gz，zip, dir -->  
+    <formats>
+        <format>dir</format>  
+    </formats>  
+  
+    <dependencySets>  
+    	<!-- 依赖包的输出路径 -->
+        <dependencySet>  
+            <!-- 是否使用项目的artifact，第三方jar是否解压，打包进zip文件的lib目录 -->  
+            <useProjectArtifact>false</useProjectArtifact>  
+            <unpack>false</unpack>    
+            <outputDirectory>/lib</outputDirectory>
+        </dependencySet>  
+    </dependencySets>  
+  
+    <fileSets>
+        <fileSet>  
+            <directory>./</directory>  
+            <includes>  
+                <include>logback.xml</include>
+                <include>run.sh</include>
+            </includes>
+            <outputDirectory>/</outputDirectory>  
+        </fileSet>
+        
+        <fileSet>  
+            <directory>./certificate</directory>  
+            <includes>  
+                <include>*.*</include>
+            </includes>
+            <outputDirectory>/certificate</outputDirectory>  
+        </fileSet>
+        
+        <fileSet>  
+            <directory>./target</directory>  
+            <includes>  
+                <include>seasy-docker-agent.jar</include>
+            </includes>  
+            <outputDirectory>/</outputDirectory>  
+        </fileSet>
+    </fileSets>  
+</assembly>
