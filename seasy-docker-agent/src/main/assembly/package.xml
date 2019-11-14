@@ -24,6 +24,7 @@
                 <include>agent.properties</include>
                 <include>docker_run.sh</include>
                 <include>logback.xml</include>
+                <include>run.bat</include>
                 <include>run.sh</include>
             </includes>
             <outputDirectory>/</outputDirectory>  
