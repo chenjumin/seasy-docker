@@ -1,19 +1,20 @@
-package com.seasy.docker.common.client;
+package com.seasy.docker.agent;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.seasy.docker.common.client.AbstractClientChainedHandler;
 import com.seasy.docker.common.config.ClientConfig;
 
-public class ClientChainedHandler extends AbstractClientChainedHandler {
-	private static Logger logger = LoggerFactory.getLogger(ClientChainedHandler.class);
+public class DockerChainedHandler extends AbstractClientChainedHandler {
+	private static Logger logger = LoggerFactory.getLogger(DockerChainedHandler.class);
 	
 	@Override
 	public void buildChain() throws Exception {
 		if (!getChain().contains("CommonHandler")) {
-            getChain().addLast("CommonHandler", new ClientCommonHandler());
+            getChain().addLast("CommonHandler", new DockerCommonHandler());
         }
 	}
 	

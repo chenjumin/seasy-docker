@@ -4,7 +4,6 @@ import org.apache.mina.core.session.IoSession;
 
 import com.seasy.docker.common.CommonMessage;
 import com.seasy.docker.common.MessageTypes;
-import com.seasy.docker.common.client.ClientChainedHandler;
 import com.seasy.docker.common.client.ClientImpl;
 import com.seasy.docker.common.config.ClientConfig;
 import com.seasy.docker.common.config.SSLConfig;
@@ -33,7 +32,7 @@ public class Main {
 					.build();
 			
 			client = new ClientImpl.Builder<CommonMessage>()
-					.setHandler(new ClientChainedHandler())
+					.setHandler(new DockerChainedHandler())
 					.setConfig(config)
 					.build();
 			

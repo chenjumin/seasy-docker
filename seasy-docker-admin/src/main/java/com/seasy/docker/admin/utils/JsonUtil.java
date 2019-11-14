@@ -37,11 +37,14 @@ public class JsonUtil {
         return value;
     }
 
+    /**
+     * 以层次关系输出json字符串
+     */
     public static String object2String(JSONObject object){
         if(object == null){
             return null;
         }else{
-            return object.toString(2);
+            return object.toString(2); //缩进两个空格
         }
     }
 
@@ -100,21 +103,17 @@ public class JsonUtil {
         return object.toString(2);
     }
     
-//    public static void main(String[] args) {
-//		System.out.println(toJSONString("cjm", "123"));
-//		
-//		User user = string2JavaBean("{username:\"cjm\", password:\"123\"}", User.class);
-//		System.out.println(user.getUsername());
-//		System.out.println(user.getPassword());
-//		
-//		JSONObject object = new JSONObject();
-//		object.put("uid", "cjm");
-//		object.put("pwd", "123");
-//		System.out.println(object2String(object));
-//		System.out.println(getString(object, "pwd"));
-//		
-//		object = string2object("{username:\"cjm\", password:\"123\"}");
-//		System.out.println(getString(object, "username"));
-//	}
+    public static void main(String[] args) {
+		System.out.println(toJSONString("cjm", "123"));
+		
+		JSONObject object = new JSONObject();
+		object.put("uid", "cjm");
+		object.put("pwd", "123456");
+		System.out.println(object2String(object));
+		System.out.println(getString(object, "pwd"));
+		
+		object = string2object("{username:\"zhangsan\", password:\"123\"}");
+		System.out.println(getString(object, "username"));
+	}
 
 }

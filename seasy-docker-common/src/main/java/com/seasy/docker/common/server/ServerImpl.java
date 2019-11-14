@@ -31,7 +31,7 @@ public class ServerImpl implements Server{
 	private static final int PROCESSOR_COUNT = Runtime.getRuntime().availableProcessors();
 	
 	private SocketAcceptor socketAcceptor = null;
-	private ServerChainedHandler serverChainedHandler;
+	private AbstractServerChainedHandler serverChainedHandler;
 	private ServerConfig serverConfig;
 	
 	private ServerImpl(){
@@ -119,7 +119,7 @@ public class ServerImpl implements Server{
 			server = new ServerImpl();
 		}
 		
-		public Builder setHandler(ServerChainedHandler serverChainedHandler){
+		public Builder setHandler(AbstractServerChainedHandler serverChainedHandler){
 			server.serverChainedHandler = serverChainedHandler;
 			return this;
 		}

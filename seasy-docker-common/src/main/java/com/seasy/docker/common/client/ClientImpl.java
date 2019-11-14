@@ -32,7 +32,7 @@ public class ClientImpl<T> implements Client<T> {
 	private IoSession session = null;
 	private int reconnectedCount = 0; //已重连的次数
 	
-	private ClientChainedHandler clientChainHandler;
+	private AbstractClientChainedHandler clientChainHandler;
 	private ClientConfig clientConfig;
 	
 	private ClientImpl(){
@@ -174,7 +174,7 @@ public class ClientImpl<T> implements Client<T> {
 			return client;
 		}
 		
-		public Builder<T> setHandler(ClientChainedHandler handler){
+		public Builder<T> setHandler(AbstractClientChainedHandler handler){
 			client.clientChainHandler = handler;
 			return this;
 		}
