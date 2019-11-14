@@ -7,8 +7,8 @@ public final class ParamKeys {
 	}
 	
 	public enum Server{
-		LISTEN_PORT,
-		SELECTOR_THREADS,
-		WORKER_THREADS
+		S_LISTEN_PORT,
+		S_SELECTOR_THREADS,
+		S_WORKER_THREADS
 	}
 }

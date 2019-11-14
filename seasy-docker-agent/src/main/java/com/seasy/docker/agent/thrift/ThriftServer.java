@@ -15,9 +15,9 @@ public class ThriftServer {
 	public static void start() {
 		ServerBootstrap serverBootstrap = null;
 		try{
-			String listenPort = PropertiesUtil.getInstance().getProperty(ParamKeys.Server.LISTEN_PORT.name());
-			String selectorThreads = PropertiesUtil.getInstance().getProperty(ParamKeys.Server.SELECTOR_THREADS.name());
-			String workerThreads = PropertiesUtil.getInstance().getProperty(ParamKeys.Server.WORKER_THREADS.name());
+			String listenPort = PropertiesUtil.getInstance().getProperty(ParamKeys.Server.S_LISTEN_PORT.name());
+			String selectorThreads = PropertiesUtil.getInstance().getProperty(ParamKeys.Server.S_SELECTOR_THREADS.name());
+			String workerThreads = PropertiesUtil.getInstance().getProperty(ParamKeys.Server.S_WORKER_THREADS.name());
 			
 			ServerConfig config = new ServerConfig();
 			config.setPort(Integer.parseInt(listenPort));
