@@ -3,12 +3,12 @@ package com.seasy.docker.agent;
 import org.apache.mina.core.session.IoSession;
 
 import com.seasy.docker.common.CommonMessage;
-import com.seasy.docker.common.MessageTypes;
 import com.seasy.docker.common.client.ClientImpl;
 import com.seasy.docker.common.config.ClientConfig;
 import com.seasy.docker.common.config.SSLConfig;
 import com.seasy.docker.common.core.Client;
 import com.seasy.docker.common.core.DefaultClientListener;
+import com.seasy.docker.common.core.MessageTypes;
 
 public class Main {
 	public static void main(String[] args) {

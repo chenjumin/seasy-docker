@@ -4,9 +4,9 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.keepalive.KeepAliveMessageFactory;
 
 import com.seasy.docker.common.CommonMessage;
-import com.seasy.docker.common.MessageTypes;
 import com.seasy.docker.common.config.AbstractConfig;
 import com.seasy.docker.common.config.Config;
+import com.seasy.docker.common.core.MessageTypes;
 
 public class KeepAliveMessageFactoryImpl implements KeepAliveMessageFactory {
 	private Config config;

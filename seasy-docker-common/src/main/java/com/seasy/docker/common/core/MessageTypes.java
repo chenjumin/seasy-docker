@@ -1,4 +1,4 @@
-package com.seasy.docker.common;
+package com.seasy.docker.common.core;
 
 public class MessageTypes {
 	public static final int TEST = 8888;

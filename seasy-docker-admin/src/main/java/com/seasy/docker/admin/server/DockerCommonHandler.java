@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import com.seasy.docker.admin.utils.JsonUtil;
 import com.seasy.docker.common.AbstractHandlerCommand;
 import com.seasy.docker.common.CommonMessage;
-import com.seasy.docker.common.MessageTypes;
 import com.seasy.docker.common.SeasyLoggerFactory;
+import com.seasy.docker.common.core.MessageTypes;
 
 public class DockerCommonHandler extends AbstractHandlerCommand {
 	private static Logger logger = SeasyLoggerFactory.getLogger(DockerCommonHandler.class);

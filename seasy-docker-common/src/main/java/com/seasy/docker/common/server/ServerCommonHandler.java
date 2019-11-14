@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.seasy.docker.common.AbstractHandlerCommand;
 import com.seasy.docker.common.CommonMessage;
-import com.seasy.docker.common.MessageTypes;
+import com.seasy.docker.common.core.MessageTypes;
 
 public class ServerCommonHandler extends AbstractHandlerCommand {
 	private static Logger logger = LoggerFactory.getLogger(ServerCommonHandler.class);
