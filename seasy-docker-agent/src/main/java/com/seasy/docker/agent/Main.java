@@ -3,9 +3,9 @@ package com.seasy.docker.agent;
 import org.apache.mina.core.session.IoSession;
 
 import com.seasy.docker.common.CommonMessage;
-import com.seasy.docker.common.Constants;
 import com.seasy.docker.common.client.ClientImpl;
 import com.seasy.docker.common.config.ClientConfig;
+import com.seasy.docker.common.config.Constants;
 import com.seasy.docker.common.config.SSLConfig;
 import com.seasy.docker.common.core.Client;
 import com.seasy.docker.common.core.DefaultClientListener;
