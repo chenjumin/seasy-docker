@@ -21,7 +21,8 @@ public class Main {
 					.setSslConfig(new SSLConfig.Builder().setEnabled(true).build()) //不启用SSL
 					.setListener(new DefaultClientListener(){
 						public void onConnectSuccess(IoSession session) {
-							CommonMessage message = new CommonMessage(MessageTypes.TEST, "hello server".getBytes());
+							String commandResult = CommandExecutor.execute("/images/json");
+							CommonMessage message = new CommonMessage(MessageTypes.TEST, commandResult.getBytes());
 							session.write(message);
 						}
 						
