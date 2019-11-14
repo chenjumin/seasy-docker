@@ -21,6 +21,7 @@
         <fileSet>  
             <directory>./</directory>  
             <includes>  
+                <include>docker_run.sh</include>
                 <include>logback.xml</include>
                 <include>run.sh</include>
             </includes>
