@@ -1,2 +1,2 @@
 #!/bin/bash
-mvn clean assembly:assembly
+mvn clean assembly:assembly -Ddockerfile.tag.skip

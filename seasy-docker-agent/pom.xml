@@ -59,6 +59,25 @@
     	<finalName>seasy-docker-agent</finalName>
     	
     	<plugins>
+			<plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>properties-maven-plugin</artifactId>
+		        <version>1.0.0</version>
+		        <executions>
+		          	<execution>
+			            <phase>initialize</phase>
+			            <goals>
+			              	<goal>read-project-properties</goal>
+			            </goals>
+			            <configuration>
+			              	<files>
+			                	<file>${project.basedir}/pom.properties</file>
+			              	</files>
+			            </configuration>
+		          	</execution>
+		        </executions>
+	      	</plugin>
+	      	
 	    	<plugin>
 	            <groupId>org.apache.maven.plugins</groupId>
 	            <artifactId>maven-compiler-plugin</artifactId>
@@ -108,6 +127,34 @@
 	                </execution>  
             	</executions>  
         	</plugin>  
+        	
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.10</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<!--如果package时不想用docker打包,就注释掉这个goal-->
+							<goal>build</goal>
+							<!-- <goal>push</goal> -->
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<contextDirectory>${project.basedir}</contextDirectory>
+					<dockerfile>Dockerfile</dockerfile>
+					
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+					<tag>${project.version}</tag> <!-- 不指定tag默认为latest -->
+					
+					<buildArgs>
+						<!-- 提供参数向Dockerfile传递，在Dockerfile中需要用ARG定义该参数 -->            
+						<build_message>start build docker...</build_message>           
+					</buildArgs>
+				</configuration>
+			</plugin>
     	</plugins>
 	</build>
 	
