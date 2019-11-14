@@ -1,4 +1,4 @@
-package com.seasy.docker.admin.utils;
+package com.seasy.docker.common.utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
