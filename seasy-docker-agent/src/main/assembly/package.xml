@@ -24,6 +24,7 @@
                 <include>docker_run.sh</include>
                 <include>logback.xml</include>
                 <include>run.sh</include>
+                <include>agent.env</include>
             </includes>
             <outputDirectory>/</outputDirectory>  
         </fileSet>
