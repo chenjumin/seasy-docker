@@ -16,10 +16,10 @@
     </appender>
     
 	<appender name="main" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOG_DIR}/seasy-${LOG_DATE}.log</file>
+		<file>${LOG_DIR}/admin-${LOG_DATE}.log</file>
 		<append>true</append>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_DIR}/seasy-%d{yyyyMMdd}.%i.log</fileNamePattern>
+			<fileNamePattern>${LOG_DIR}/admin-%d{yyyyMMdd}.%i.log</fileNamePattern>
 			<maxHistory>${LOG_MAX_HISTORY}</maxHistory>
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>64MB</maxFileSize>
