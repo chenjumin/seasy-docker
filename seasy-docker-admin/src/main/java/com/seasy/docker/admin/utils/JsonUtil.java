@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import com.seasy.docker.common.utils.StringUtil;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class JsonUtil {
@@ -14,6 +15,13 @@ public class JsonUtil {
     public static JSONObject string2object(String jsonData){
         if(StringUtil.isNotEmpty(jsonData)) {
             return JSONObject.fromObject(jsonData);
+        }
+        return null;
+    }
+    
+    public static JSONArray string2array(String jsonData){
+    	if(StringUtil.isNotEmpty(jsonData)) {
+            return JSONArray.fromObject(jsonData);
         }
         return null;
     }
@@ -40,11 +48,19 @@ public class JsonUtil {
     /**
      * 以层次关系输出json字符串
      */
-    public static String object2String(JSONObject object){
+    public static String object2string(JSONObject object){
         if(object == null){
             return null;
         }else{
             return object.toString(2); //缩进两个空格
+        }
+    }
+    
+    public static String array2string(JSONArray array){
+        if(array == null){
+            return null;
+        }else{
+            return array.toString(2); //缩进两个空格
         }
     }
 
@@ -109,7 +125,7 @@ public class JsonUtil {
 		JSONObject object = new JSONObject();
 		object.put("uid", "cjm");
 		object.put("pwd", "123456");
-		System.out.println(object2String(object));
+		System.out.println(object2string(object));
 		System.out.println(getString(object, "pwd"));
 		
 		object = string2object("{username:\"zhangsan\", password:\"123\"}");
