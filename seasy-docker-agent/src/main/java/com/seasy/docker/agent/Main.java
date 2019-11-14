@@ -3,19 +3,24 @@ package com.seasy.docker.agent;
 import org.apache.mina.core.session.IoSession;
 
 import com.seasy.docker.common.CommonMessage;
+import com.seasy.docker.common.Constants;
 import com.seasy.docker.common.client.ClientImpl;
 import com.seasy.docker.common.config.ClientConfig;
 import com.seasy.docker.common.config.SSLConfig;
 import com.seasy.docker.common.core.Client;
 import com.seasy.docker.common.core.DefaultClientListener;
 import com.seasy.docker.common.core.MessageTypes;
+import com.seasy.docker.common.utils.PropertiesUtil;
 
 public class Main {
 	public static void main(String[] args) {
 		Client<CommonMessage> client = null;
 		try{
+			String serverIp = PropertiesUtil.getInstance().getProperty(Constants.SERVER_IP.name());
+			System.out.println("serverIp=" +serverIp);
+			
 			final ClientConfig config = new ClientConfig.Builder()
-					.setServerIp("192.168.134.1")
+					.setServerIp(serverIp)
 					.setHeartbeatEnabled(true) //心跳
 					.setSslConfig(new SSLConfig.Builder().setEnabled(true).build()) //不启用SSL
 					.setListener(new DefaultClientListener(){
