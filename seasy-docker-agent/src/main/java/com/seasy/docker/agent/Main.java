@@ -1,55 +1,24 @@
 package com.seasy.docker.agent;
 
-import org.apache.mina.core.session.IoSession;
-
-import com.seasy.docker.common.CommonMessage;
-import com.seasy.docker.common.client.ClientImpl;
-import com.seasy.docker.common.config.ClientConfig;
-import com.seasy.docker.common.config.Constants;
-import com.seasy.docker.common.config.SSLConfig;
-import com.seasy.docker.common.core.Client;
-import com.seasy.docker.common.core.DefaultClientListener;
-import com.seasy.docker.common.core.MessageTypes;
-import com.seasy.docker.common.utils.PropertiesUtil;
+import com.seasy.docker.agent.mina.MinaClient;
+import com.seasy.docker.agent.thrift.ThriftServer;
 
 public class Main {
+	/**
+	 * server	作为服务端模式
+	 * client	作为客户端模式
+	 */
+	private static String mode = "server";
+	
 	public static void main(String[] args) {
-		Client<CommonMessage> client = null;
-		try{
-			String serverIp = PropertiesUtil.getInstance().getProperty(Constants.SERVER_IP.name());
-			System.out.println("serverIp=" +serverIp);
-			
-			final ClientConfig config = new ClientConfig.Builder()
-					.setServerIp(serverIp)
-					.setHeartbeatEnabled(true) //心跳
-					.setSslConfig(new SSLConfig.Builder().setEnabled(true).build()) //不启用SSL
-					.setListener(new DefaultClientListener(){
-						public void onConnectSuccess(IoSession session) {
-							String commandResult = CommandExecutor.execute("/images/json");
-							CommonMessage message = new CommonMessage(MessageTypes.TEST, commandResult.getBytes());
-							session.write(message);
-						}
-						
-						public void onSessionClosed(Client client, IoSession session) {
-							client.reconnect();
-						};
-					})
-					.build();
-			
-			client = new ClientImpl.Builder<CommonMessage>()
-					.setHandler(new DockerChainedHandler())
-					.setConfig(config)
-					.build();
-			
-			client.connect();
-			
-		}catch(Exception ex){
-			ex.printStackTrace();
-			
-			if(client != null){
-				client.disconnect();
-			}
+		if(args != null && args.length > 0){
+			mode = args[0];
+		}
+		
+		if("server".equalsIgnoreCase(mode)){
+			ThriftServer.start();
+		}else{
+			MinaClient.start();
 		}
 	}
-	
 }

@@ -1,19 +1,18 @@
-package com.seasy.docker.admin.server;
+package com.seasy.docker.common.mina.server;
 
 import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.seasy.docker.common.SeasyLoggerFactory;
-import com.seasy.docker.common.mina.server.AbstractServerChainedHandler;
 import com.seasy.docker.common.utils.StringUtil;
 
-public class DockerChainedHandler extends AbstractServerChainedHandler {
-	private static Logger logger = SeasyLoggerFactory.getLogger(DockerChainedHandler.class);
+public class ServerChainedHandler extends AbstractServerChainedHandler {
+	private static Logger logger = LoggerFactory.getLogger(ServerChainedHandler.class);
 	
 	@Override
 	public void buildChain() throws Exception {
-		if (!getChain().contains("DockerCommonHandler")) {
-            getChain().addLast("DockerCommonHandler", new DockerCommonHandler());
+		if (!getChain().contains("ServerCommonHandler")) {
+            getChain().addLast("ServerCommonHandler", new ServerCommonHandler());
         }
 	}
 	
@@ -45,5 +44,6 @@ public class DockerChainedHandler extends AbstractServerChainedHandler {
 		}else{
 			logger.error("Server Error", ex);
 		}
-	}	
+	}
+	
 }
