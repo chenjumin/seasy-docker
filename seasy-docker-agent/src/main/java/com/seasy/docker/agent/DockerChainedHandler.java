@@ -13,8 +13,8 @@ public class DockerChainedHandler extends AbstractClientChainedHandler {
 	
 	@Override
 	public void buildChain() throws Exception {
-		if (!getChain().contains("CommonHandler")) {
-            getChain().addLast("CommonHandler", new DockerCommonHandler());
+		if (!getChain().contains("DockerCommonHandler")) {
+            getChain().addLast("DockerCommonHandler", new DockerCommonHandler());
         }
 	}
 	
