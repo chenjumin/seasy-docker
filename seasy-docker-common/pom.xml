@@ -12,6 +12,7 @@
   </properties>
   
   <dependencies>
+    <!-- mina -->
   	<dependency>
     	<groupId>org.apache.mina</groupId>
     	<artifactId>mina-core</artifactId>
@@ -42,13 +43,23 @@
     	<artifactId>ezmorph</artifactId>
     	<version>1.0.6</version>
 	</dependency>
-	
 	<dependency>
     	<groupId>commons-lang</groupId>
     	<artifactId>commons-lang</artifactId>
     	<version>2.6</version>
 	</dependency>
+	<dependency>
+    	<groupId>commons-collections</groupId>
+    	<artifactId>commons-collections</artifactId>
+    	<version>3.2.2</version>
+	</dependency>
+	<dependency>
+    	<groupId>commons-beanutils</groupId>
+    	<artifactId>commons-beanutils</artifactId>
+    	<version>1.9.3</version>
+	</dependency>
 	
+	<!-- log -->
 	<dependency>
   		<groupId>org.slf4j</groupId>
   		<artifactId>slf4j-api</artifactId>
@@ -64,13 +75,6 @@
     	<artifactId>logback-classic</artifactId>
     	<version>1.1.11</version>
 	</dependency>
-	
-<!-- 	<dependency> -->
-<!--     	<groupId>junit</groupId> -->
-<!--     	<artifactId>junit</artifactId> -->
-<!--     	<version>4.12</version> -->
-<!--     	<scope>test</scope> -->
-<!-- 	</dependency> -->
   </dependencies>
   
   	<build>
