@@ -1,4 +1,4 @@
-package com.seasy.docker.common.mina.client;
+package com.seasy.docker.common.mina;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.mina.core.session.IoSession;
@@ -6,16 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.seasy.docker.common.mina.config.ClientConfig;
+import com.seasy.docker.common.mina.core.Client;
 
-public class ClientChainedHandler extends AbstractClientChainedHandler {
-	private static Logger logger = LoggerFactory.getLogger(ClientChainedHandler.class);
+public abstract class AbstractClientChainedHandler extends AbstractChainedHandler {
+	private static Logger logger = LoggerFactory.getLogger(AbstractClientChainedHandler.class);
+	private Client client;
 	
-	@Override
-	public void buildChain() throws Exception {
-		if (!getChain().contains("CommonHandler")) {
-            getChain().addLast("CommonHandler", new ClientCommonHandler());
-        }
-	}
+	public abstract void buildChain() throws Exception;
 	
 	@Override
 	public void sessionClosed(IoSession session) throws Exception {
@@ -39,4 +36,12 @@ public class ClientChainedHandler extends AbstractClientChainedHandler {
 		}
 	}
 	
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
 }

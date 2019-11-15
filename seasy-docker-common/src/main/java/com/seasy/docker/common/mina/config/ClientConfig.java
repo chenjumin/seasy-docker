@@ -98,11 +98,6 @@ public class ClientConfig extends AbstractConfig {
 			return this;
 		}
 
-		public Builder setHeartbeatMessage(String heartbeatMessage) {
-			config.setHeartbeatMessage(heartbeatMessage);
-			return this;
-		}
-
 		public Builder setRequestIntervalSeconds(int requestIntervalSeconds) {
 			config.setRequestIntervalSeconds(requestIntervalSeconds);
 			return this;

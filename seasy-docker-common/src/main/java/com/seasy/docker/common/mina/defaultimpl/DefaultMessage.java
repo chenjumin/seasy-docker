@@ -1,4 +1,4 @@
-package com.seasy.docker.common.mina;
+package com.seasy.docker.common.mina.defaultimpl;
 
 import org.apache.commons.lang.ArrayUtils;
 
@@ -9,13 +9,13 @@ import com.seasy.docker.common.utils.NumberUtil;
  * 消息对象。格式如下：
  * 	 	实际数据的字节长度[4字节] + 报文类型[4字节] + 实际数据的字节数组
  */
-public class CommonMessage implements IMessage{
+public class DefaultMessage implements IMessage{
 	private int length;
 	private int type;
 	private byte[] dataArr;
 	private byte[] fullData; //完整报文的字节数组
 	
-	public CommonMessage(int type, byte[] dataArr){
+	public DefaultMessage(int type, byte[] dataArr){
 		this.length = dataArr.length;
 		this.type = type;
 		this.dataArr = dataArr;

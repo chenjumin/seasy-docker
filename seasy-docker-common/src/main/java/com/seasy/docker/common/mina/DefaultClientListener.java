@@ -1,9 +1,11 @@
-package com.seasy.docker.common.mina.core;
+package com.seasy.docker.common.mina;
 
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.transport.socket.SocketConnector;
 
 import com.seasy.docker.common.mina.config.Config;
+import com.seasy.docker.common.mina.core.Client;
+import com.seasy.docker.common.mina.core.ClientListener;
 
 public class DefaultClientListener implements ClientListener {
 	@Override

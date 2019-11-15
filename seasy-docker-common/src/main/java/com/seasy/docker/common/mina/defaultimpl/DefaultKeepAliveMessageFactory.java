@@ -1,26 +1,17 @@
-package com.seasy.docker.common.mina.keepalive;
+package com.seasy.docker.common.mina.defaultimpl;
 
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.keepalive.KeepAliveMessageFactory;
 
-import com.seasy.docker.common.mina.CommonMessage;
-import com.seasy.docker.common.mina.config.AbstractConfig;
-import com.seasy.docker.common.mina.config.Config;
-import com.seasy.docker.common.mina.core.MessageTypes;
+import com.seasy.docker.common.mina.MessageTypes;
 
-public class KeepAliveMessageFactoryImpl implements KeepAliveMessageFactory {
-	private Config config;
-	
-	public KeepAliveMessageFactoryImpl(Config config){
-		this.config = config;
-	}
-	
+public class DefaultKeepAliveMessageFactory implements KeepAliveMessageFactory {
 	/**
 	 * 判断是否是客户端发送来的心跳包，此判断影响 KeepAliveRequestTimeoutHandler实现类
 	 */
 	@Override
 	public boolean isRequest(IoSession session, Object object) {
-		CommonMessage message = (CommonMessage)object;
+		DefaultMessage message = (DefaultMessage)object;
 		if(MessageTypes.HEARTBEAT == message.getType()){
 			return true;
 		}
@@ -32,7 +23,7 @@ public class KeepAliveMessageFactoryImpl implements KeepAliveMessageFactory {
 	 */
 	@Override
 	public Object getRequest(IoSession session) {
-		return new CommonMessage(MessageTypes.HEARTBEAT, ((AbstractConfig)config).getHeartbeatMessage().getBytes());
+		return new DefaultMessage(MessageTypes.HEARTBEAT, "HB".getBytes());
 	}
 
 	/**

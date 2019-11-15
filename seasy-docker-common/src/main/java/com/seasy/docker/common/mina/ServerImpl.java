@@ -1,10 +1,13 @@
-package com.seasy.docker.common.mina.server;
+package com.seasy.docker.common.mina;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.SSLContext;
+
 import org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder;
 import org.apache.mina.core.session.IdleStatus;
+import org.apache.mina.filter.codec.ProtocolCodecFactory;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.executor.ExecutorFilter;
 import org.apache.mina.filter.keepalive.KeepAliveFilter;
@@ -17,22 +20,22 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.slf4j.Logger;
 
 import com.seasy.docker.common.SeasyLoggerFactory;
-import com.seasy.docker.common.mina.SSLContextFactory;
 import com.seasy.docker.common.mina.config.ServerConfig;
 import com.seasy.docker.common.mina.core.Server;
-import com.seasy.docker.common.mina.keepalive.KeepAliveMessageFactoryImpl;
-import com.seasy.docker.common.mina.keepalive.KeepAliveRequestTimeoutHandlerImpl;
-import com.seasy.docker.common.mina.protocol.ByteArrayCodecFactory;
+import com.seasy.docker.common.mina.defaultimpl.DefaultCodecFactory;
+import com.seasy.docker.common.mina.defaultimpl.DefaultKeepAliveMessageFactory;
+import com.seasy.docker.common.mina.defaultimpl.DefaultKeepAliveRequestTimeoutHandler;
+import com.seasy.docker.common.mina.defaultimpl.DefaultServerChainedHandler;
 
 public class ServerImpl implements Server{
 	private static Logger logger = SeasyLoggerFactory.getLogger(ServerImpl.class);
 	
-	//最大Porcessor线程数
-	private static final int PROCESSOR_COUNT = Runtime.getRuntime().availableProcessors();
-	
 	private SocketAcceptor socketAcceptor = null;
+
+	private ProtocolCodecFactory protocolCodecFactory;
 	private AbstractServerChainedHandler serverChainedHandler;
 	private ServerConfig serverConfig;
+	private KeepAliveMessageFactory keepAliveMessageFactory;
 	
 	private ServerImpl(){
 		
@@ -42,19 +45,22 @@ public class ServerImpl implements Server{
 	public void start(){
         try {
         	//初始化指定数量的NioProcessor
-    		socketAcceptor = new NioSocketAcceptor(PROCESSOR_COUNT);
+    		socketAcceptor = new NioSocketAcceptor(serverConfig.getProcessorCount());
     		
     		DefaultIoFilterChainBuilder filterChainBuilder = new DefaultIoFilterChainBuilder();
 
     		if(serverConfig.getSslConfig().isEnabled()){
 				logger.info("server ssl enable");
-    			SslFilter sslFilter = new SslFilter(SSLContextFactory.getServerSSLContext(serverConfig.getSslConfig()));
+				SSLContext sslContext = SSLContextFactory.getServerSSLContext(serverConfig.getSslConfig());
+				
+    			SslFilter sslFilter = new SslFilter(sslContext);
+				sslFilter.setEnabledCipherSuites(sslContext.getSupportedSSLParameters().getCipherSuites());
     			sslFilter.setNeedClientAuth(false);
     			filterChainBuilder.addLast("sslFilter", sslFilter);
     		}
     		
             filterChainBuilder.addLast("logger", new LoggingFilter());
-    		filterChainBuilder.addLast("codec", new ProtocolCodecFilter(new ByteArrayCodecFactory()));
+    		filterChainBuilder.addLast("codec", new ProtocolCodecFilter(protocolCodecFactory));
     		
     		//将IO线程和工作线程分开，业务逻辑处理使用单独的线程
     		//new ExecutorFilter() 缺省使用OrderedThreadPoolExecutor线程池，对同一session消息是顺序处理的
@@ -63,11 +69,9 @@ public class ServerImpl implements Server{
     		//心跳
     		if(serverConfig.isHeartbeatEnabled()){
     			logger.debug("server heartbeat enable");
-    			
-	    		KeepAliveMessageFactory heartBeatFactory = new KeepAliveMessageFactoryImpl(serverConfig);
-	    		KeepAliveRequestTimeoutHandler heartBeatHandler = new KeepAliveRequestTimeoutHandlerImpl();
+	    		KeepAliveRequestTimeoutHandler heartBeatHandler = new DefaultKeepAliveRequestTimeoutHandler();
 	            
-	            KeepAliveFilter heartBeat = new KeepAliveFilter(heartBeatFactory, IdleStatus.READER_IDLE, heartBeatHandler);
+	            KeepAliveFilter heartBeat = new KeepAliveFilter(keepAliveMessageFactory, IdleStatus.BOTH_IDLE, heartBeatHandler);
 	            heartBeat.setForwardEvent(false); //是否回发
 	            heartBeat.setRequestInterval(serverConfig.getRequestIntervalSeconds()); //发送频率
 	            heartBeat.setRequestTimeout(serverConfig.getRequestTimeoutSeconds()); //发送超时
@@ -119,19 +123,52 @@ public class ServerImpl implements Server{
 			server = new ServerImpl();
 		}
 		
+		public ServerImpl build(){
+			if(server.serverConfig == null){
+				throw new RuntimeException("Config must be set");
+			}
+			
+			server.serverChainedHandler.setConfig(server.serverConfig);
+
+			if(server.protocolCodecFactory == null){
+				server.protocolCodecFactory = new DefaultCodecFactory();
+			}
+			
+			if(server.serverChainedHandler == null){
+				server.serverChainedHandler = new DefaultServerChainedHandler();
+			}
+			
+			if(server.serverConfig.isHeartbeatEnabled()){
+				if(server.keepAliveMessageFactory == null){
+					server.keepAliveMessageFactory = new DefaultKeepAliveMessageFactory();
+				}
+			}
+			
+			return server;
+		}
+		
+		//通讯协议工厂
+		public Builder setProtocolCodecFactory(ProtocolCodecFactory protocolCodecFactory){
+			server.protocolCodecFactory = protocolCodecFactory;
+			return this;
+		}
+
+		//Handler链
 		public Builder setHandler(AbstractServerChainedHandler serverChainedHandler){
 			server.serverChainedHandler = serverChainedHandler;
 			return this;
 		}
-		
+
+		//配置对象
 		public Builder setConfig(ServerConfig config){
 			server.serverConfig = config;
 			return this;
 		}
 		
-		public ServerImpl build(){
-			server.serverChainedHandler.setConfig(server.serverConfig);
-			return server;
+		//心跳消息工厂
+		public Builder setKeepAliveMessageFactory(KeepAliveMessageFactory keepAliveMessageFactory){
+			server.keepAliveMessageFactory = keepAliveMessageFactory;
+			return this;
 		}
 	}
 	

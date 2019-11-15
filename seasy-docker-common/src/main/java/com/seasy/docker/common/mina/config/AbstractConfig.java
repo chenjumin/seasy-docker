@@ -9,7 +9,6 @@ public abstract class AbstractConfig implements Config{
 	private int linger = 0; //延迟n秒关闭Socket底层连接
 	
 	private boolean heartbeatEnabled = true; //是否启用心跳功能
-	private String heartbeatMessage = "HEARTBEAT"; //心跳报文内容
 	
 	//两个心跳报文之间的总间隔时间 = requestIntervalSeconds + requestTimeoutSeconds
 	private int requestIntervalSeconds = 5; //心跳请求包发送的频率，单位为秒
@@ -67,14 +66,6 @@ public abstract class AbstractConfig implements Config{
 
 	public void setHeartbeatEnabled(boolean heartbeatEnabled) {
 		this.heartbeatEnabled = heartbeatEnabled;
-	}
-
-	public String getHeartbeatMessage() {
-		return heartbeatMessage;
-	}
-
-	public void setHeartbeatMessage(String heartbeatMessage) {
-		this.heartbeatMessage = heartbeatMessage;
 	}
 
 	public int getRequestIntervalSeconds() {

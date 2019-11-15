@@ -1,10 +1,23 @@
 package com.seasy.docker.common.mina.config;
 
 public class ServerConfig extends AbstractConfig {
+	/**
+	 * 最大Porcessor线程数
+	 */
+	private int processorCount = Runtime.getRuntime().availableProcessors();
+	
 	private ServerConfig(){
 		
 	}
 	
+	public int getProcessorCount() {
+		return processorCount;
+	}
+
+	public void setProcessorCount(int processorCount) {
+		this.processorCount = processorCount;
+	}
+
 	public static class Builder{
 		private ServerConfig config;
 
@@ -47,11 +60,6 @@ public class ServerConfig extends AbstractConfig {
 			return this;
 		}
 
-		public Builder setHeartbeatMessage(String heartbeatMessage) {
-			config.setHeartbeatMessage(heartbeatMessage);
-			return this;
-		}
-
 		public Builder setRequestIntervalSeconds(int requestIntervalSeconds) {
 			config.setRequestIntervalSeconds(requestIntervalSeconds);
 			return this;
@@ -79,6 +87,12 @@ public class ServerConfig extends AbstractConfig {
 		
 		public Builder setReadBuf(int readBuf) {
 			config.setReadBuf(readBuf);
+			return this;
+		}
+		
+		//ServerConfig
+		public Builder setProcessorCount(int processorCount) {
+			config.setProcessorCount(processorCount);
 			return this;
 		}
 	}

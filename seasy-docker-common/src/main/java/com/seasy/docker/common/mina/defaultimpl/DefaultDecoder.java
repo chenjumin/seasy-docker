@@ -1,4 +1,4 @@
-package com.seasy.docker.common.mina.protocol;
+package com.seasy.docker.common.mina.defaultimpl;
 
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
@@ -7,12 +7,11 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.seasy.docker.common.mina.CommonMessage;
 import com.seasy.docker.common.mina.core.IMessage;
 import com.seasy.docker.common.utils.NumberUtil;
 
-public class ByteArrayDecoder extends CumulativeProtocolDecoder {
-	private static final Logger logger = LoggerFactory.getLogger(ByteArrayDecoder.class);
+public class DefaultDecoder extends CumulativeProtocolDecoder {
+	private static final Logger logger = LoggerFactory.getLogger(DefaultDecoder.class);
 	
 	@Override
 	protected boolean doDecode(IoSession session, IoBuffer in, ProtocolDecoderOutput out) throws Exception {
@@ -44,7 +43,7 @@ public class ByteArrayDecoder extends CumulativeProtocolDecoder {
 		in.get(dataArr, 0, length);
 		logger.debug("length=" + length + ", type=" + type + ", data=" + new String(dataArr));
 
-        IMessage message = new CommonMessage(type, dataArr);
+        IMessage message = new DefaultMessage(type, dataArr);
 		out.write(message);
 		
 		//继续做拆包处理：让父类把剩下的数据再给解析一次
