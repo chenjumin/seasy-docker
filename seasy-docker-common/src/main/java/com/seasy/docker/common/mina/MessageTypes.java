@@ -5,7 +5,12 @@ package com.seasy.docker.common.mina;
  */
 public class MessageTypes {
 	/**
+	 * 测试专用
+	 */
+	public static final int TEST = 10;
+	
+	/**
 	 * 心跳
 	 */
-	public static final int HEARTBEAT = 9999;
+	public static final int HEARTBEAT = 20;
 }

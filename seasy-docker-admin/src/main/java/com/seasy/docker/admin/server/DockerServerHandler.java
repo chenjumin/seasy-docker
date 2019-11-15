@@ -7,16 +7,16 @@ import org.slf4j.Logger;
 
 import com.seasy.docker.common.SeasyLoggerFactory;
 import com.seasy.docker.common.mina.AbstractHandlerCommand;
-import com.seasy.docker.common.mina.CommonMessage;
-import com.seasy.docker.common.mina.core.MessageTypes;
+import com.seasy.docker.common.mina.MessageTypes;
+import com.seasy.docker.common.mina.defaultimpl.DefaultMessage;
 import com.seasy.docker.common.utils.JsonUtil;
 
-public class DockerCommonHandler extends AbstractHandlerCommand {
-	private static Logger logger = SeasyLoggerFactory.getLogger(DockerCommonHandler.class);
+public class DockerServerHandler extends AbstractHandlerCommand {
+	private static Logger logger = SeasyLoggerFactory.getLogger(DockerServerHandler.class);
 	
 	@Override
 	public void doExecute(NextCommand next, IoSession session, Object object) throws Exception {
-		CommonMessage message = (CommonMessage)object;
+		DefaultMessage message = (DefaultMessage)object;
 		logger.debug("收到客户端的数据包: " + Arrays.toString(message.getFullData()));
 		
 		if(MessageTypes.TEST == message.getType()){
@@ -29,7 +29,7 @@ public class DockerCommonHandler extends AbstractHandlerCommand {
 				System.out.println(JsonUtil.array2string(JsonUtil.string2array(data)));
 			}
 			
-			CommonMessage responseMessage = new CommonMessage(MessageTypes.TEST, "hello client".getBytes());
+			DefaultMessage responseMessage = new DefaultMessage(MessageTypes.TEST, "hello client".getBytes());
 			session.write(responseMessage);
 		}else if(MessageTypes.HEARTBEAT == message.getType()){
 			//heartbeat

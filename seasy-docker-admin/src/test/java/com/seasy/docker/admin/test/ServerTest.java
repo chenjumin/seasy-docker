@@ -5,10 +5,10 @@ import org.slf4j.Logger;
 
 import com.seasy.docker.admin.server.DockerChainedHandler;
 import com.seasy.docker.common.SeasyLoggerFactory;
+import com.seasy.docker.common.mina.ServerImpl;
 import com.seasy.docker.common.mina.config.SSLConfig;
 import com.seasy.docker.common.mina.config.ServerConfig;
 import com.seasy.docker.common.mina.core.Server;
-import com.seasy.docker.common.mina.server.ServerImpl;
 
 public class ServerTest {
 	private static Logger logger = SeasyLoggerFactory.getLogger(ServerTest.class);
