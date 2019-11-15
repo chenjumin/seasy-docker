@@ -16,12 +16,6 @@ import com.seasy.docker.common.utils.StringUtil;
  * 		-d	POST方式传送数据
  * 		-H	请求的头信息
  */
-
-/**
- * 启动容器的命令：
- *     docker run -d --rm --name seasy-docker-agent -v /var/run/docker.sock:/var/run/docker.sock 
- *         192.168.134.139/seasy/seasy-docker-agent:0.0.1
- */
 public class CommandRunner {
 	private static Logger logger = SeasyLoggerFactory.getLogger(CommandRunner.class);
 	
