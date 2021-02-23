@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>seasy docker admin</title>
+  <title>docker admin</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="stylesheet" href="element-ui/theme-chalk/index.css">
   <script type="text/javascript" src="element-ui/vue.min.js"></script>
@@ -32,9 +32,9 @@
 		}
 		
 		.logo-title {
-			width: 220px;
+			width: 260px;
 			height: 100%;
-			font-size: 24px;
+			font-size: 25px;
 			font-weight: 600;
 			font-family: 黑体;
 			float: left;
@@ -117,34 +117,7 @@
 	<div id="app">
 		<el-container>
 			<el-header height="60px" class="header">
-				<div class="logo-title">电子课本学习系统</div>
-				
-				<div class="top-menu">
-					<el-menu :default-active="currentCourseIndex" 
-						active-text-color="#63B8FF" 
-						mode="horizontal" 
-						@select="topSelectHandler">
-						<el-menu-item :index="index" v-for="(item, index) in dirInfos">
-							{{ item.text }}
-						</el-menu-item>
-					</el-menu>
-				</div>
-				
-				<div class="dropdown-menu">
-					<el-dropdown split-button placement="bottom-start" size="medium" type="primary" @command="handleCommand">
-  						功能菜单
-					  	<el-dropdown-menu slot="dropdown">
-						    <el-dropdown-item command="refreshPage">刷新页面</el-dropdown-item>
-						    
-						    <el-dropdown-item divided command="translateTool">内容翻译工具</el-dropdown-item>
-						    <el-dropdown-item command="voiceTool">语音合成工具</el-dropdown-item>
-						    <el-dropdown-item command="learnWord">学汉字</el-dropdown-item>
-						    
-						    <el-dropdown-item divided><a href="http://www.dzkbw.com/" target="_blank" style="color:blue;">电子课本网</a></el-dropdown-item>
-						    <el-dropdown-item><a href="http://www.xuezizhai.com/" target="_blank" style="color:blue;">学子斋课堂</a></el-dropdown-item>
-					  	</el-dropdown-menu>
-					</el-dropdown>
-				</div>
+				<div class="logo-title">DOCKER SWARM ADMIN</div>
 			</el-header>
 
 			<el-container>

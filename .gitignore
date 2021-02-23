@@ -1,0 +1,6 @@
+/seasy-docker-admin/target
+/seasy-docker-agent/target
+/seasy-docker-common/target
+/seasy-docker-admin/logs
+/seasy-docker-agent/logs
+/seasy-docker-common/logs
